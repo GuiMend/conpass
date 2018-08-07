@@ -1,11 +1,19 @@
 import React, { Component } from "react";
-import logo from "img/conpass.png";
-import "./App.css";
+
+// React-Router implementation
+import { BrowserRouter as Router } from "react-router-dom";
 
 // Redux implementation
 import { Provider } from "react-redux";
 import { createStore, combineReducers } from "redux";
 import reducers from "./redux";
+
+// Material UI implementation of custom theme
+import { MuiThemeProvider } from "@material-ui/core/styles";
+import muitheme from "utils/theme";
+
+// Import Webapp screens
+import Root from "screens/Root";
 
 const reducer = combineReducers({
   ...reducers
@@ -20,15 +28,11 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to React</h1>
-          </header>
-          <p className="App-intro">
-            To get started, edit <code>src/App.js</code> and save to reload.
-          </p>
-        </div>
+        <Router>
+          <MuiThemeProvider theme={muitheme}>
+            <Root />
+          </MuiThemeProvider>
+        </Router>
       </Provider>
     );
   }

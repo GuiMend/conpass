@@ -1,5 +1,18 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: Roboto, sans-serif;
+  background: #e5e5e591;
 }
+
+a {
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-focus-ring-color: rgba(0, 0, 0, 0);
+	background-color: inherit;
+	outline: none;
+  
+	text-decoration: none;
+	:hover {
+	  outline: none;
+	}
+  }
