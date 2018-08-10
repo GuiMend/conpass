@@ -4,11 +4,11 @@ import TextField from "@material-ui/core/TextField";
 
 const Wrapper = styled.div`
   flex-grow: 2;
+  margin-bottom: 24px;
 `;
 
 const CustomTextField = styled(TextField)`
   && {
-	  margin-bottom: 24px
 	label {
 	  font-weight: 500;
 	  font-size: 1.3em;
@@ -26,6 +26,10 @@ const CustomTextField = styled(TextField)`
 	  }
     }
   }
+`;
+
+const Error = styled.span`
+  color: red;
 `;
 
 const Input = props => {
@@ -47,7 +51,7 @@ const Input = props => {
         {...props}
       />
       {touched[field.name] &&
-        errors[field.name] && <div className="error">{errors[field.name]}</div>}
+        errors[field.name] && <Error>{errors[field.name]}</Error>}
     </Wrapper>
   );
 };
