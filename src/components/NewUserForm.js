@@ -1,4 +1,5 @@
 import React from "react";
+import * as yup from "yup";
 import styled from "styled-components";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
@@ -46,6 +47,22 @@ const UploadText = styled.span`
   max-width: 180px;
 `;
 
+const schema = yup.object().shape({
+  firstName: yup.string().required("First name is required."),
+  lastName: yup.string().required("Last name is required."),
+  email: yup
+    .string()
+    .email(
+      "Invalid email address, must be in the form example@domain.something"
+    )
+    .required("Email is required!"),
+  password: yup.string().required("Password is required"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords don't match")
+    .required("Confirm Password is required")
+});
+
 const NewUserForm = ({
   activeStep,
   nextStep,
@@ -62,13 +79,14 @@ const NewUserForm = ({
         companyName: "",
         email: "",
         password: "",
-        repeatPassword: "",
+        confirmPassword: "",
         profilePhoto: "",
         ...newUser
       }}
+      validationSchema={schema}
       onSubmit={(values, actions) => {
         delete values.password;
-        delete values.repeatPassword;
+        delete values.confirmPassword;
         const user = { ...values, created_at: Date.now() };
         actions.setSubmitting(false);
         addUser(user);
@@ -81,14 +99,14 @@ const NewUserForm = ({
               <TwoItemWrapper>
                 <Field
                   name="firstName"
-                  label="First Name"
+                  label="First Name*"
                   placeholder="i.e. John"
                   component={Input}
                 />
                 <Spacer />
                 <Field
                   name="lastName"
-                  label="Last Name"
+                  label="Last Name*"
                   placeholder="i.e. Michael"
                   component={Input}
                 />
@@ -103,7 +121,7 @@ const NewUserForm = ({
               <Field
                 type="email"
                 name="email"
-                label="Email"
+                label="Email*"
                 placeholder="i.e. name@company.com"
                 component={Input}
               />
@@ -111,14 +129,14 @@ const NewUserForm = ({
                 <Field
                   type="password"
                   name="password"
-                  label="Password"
+                  label="Password*"
                   component={Input}
                 />
                 <Spacer />
                 <Field
                   type="password"
-                  name="repeatPassword"
-                  label="Repeat Password"
+                  name="confirmPassword"
+                  label="Confirm Password*"
                   component={Input}
                 />
               </TwoItemWrapper>
@@ -183,6 +201,7 @@ const NewUserForm = ({
               {
                 0: (
                   <ActionButton
+                    disabled={!props.isValid}
                     variant="contained"
                     color="primary"
                     onClick={() => {
