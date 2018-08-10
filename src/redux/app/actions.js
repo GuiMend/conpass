@@ -1,6 +1,6 @@
 import * as types from "./actionTypes";
 
-export const loading = loading => ({
-  type: types.LOADING,
-  loading
+export const addNewUser = user => ({
+  type: types.NEW_USER,
+  user
 });
