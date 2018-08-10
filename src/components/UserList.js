@@ -37,8 +37,8 @@ const UsersList = ({ usersList }) => {
         </MenuButton>
       </TopSection>
       <ThickDivider />
-      {usersList.map(user => (
-        <div key={user.name}>
+      {usersList.map((user, index) => (
+        <div key={`${user.name}.${index}`}>
           <UserCard {...user} />
           <ThickDivider />
         </div>

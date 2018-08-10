@@ -15,7 +15,7 @@ const Card = styled.div`
 const UserText = styled(Typography)`
   && {
     font-weight: 400;
-    color: ${props => props.textColor};
+    color: ${props => props.text_color};
   }
 `;
 
@@ -32,17 +32,17 @@ const CustomAvatar = styled(Avatar)`
   }
 `;
 
-export default ({ name, date, avatar }) => (
+export default ({ firstName, lastName, created_at, profilePhoto }) => (
   <Card>
     <UserInfo>
-      <CustomAvatar size="50" src={avatar}>
-        {!avatar && getInitials(name)}
+      <CustomAvatar size="50" src={profilePhoto}>
+        {!profilePhoto && getInitials(`${firstName} ${lastName}`)}
       </CustomAvatar>
-      <UserText variant="title">{name}</UserText>
+      <UserText variant="title">{`${firstName} ${lastName}`}</UserText>
     </UserInfo>
 
-    <UserText variant="title" textColor="gray">
-      {date && moment(date).format("LLL")}
+    <UserText variant="title" text_color="gray">
+      {created_at && moment(created_at).format("LLL")}
     </UserText>
   </Card>
 );
